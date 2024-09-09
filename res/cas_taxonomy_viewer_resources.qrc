@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="cas_taxonomy_viewer">
+        <file>cas_taxonomy_viewer/taxonomy_view.html</file>
+        <file>cas_taxonomy_viewer/taxonomy_view.css</file>
+        <file>cas_taxonomy_viewer/taxonomy_view.tools.js</file>
+        <file>cas_taxonomy_viewer/taxonomy_graph.js</file>
+    </qresource>
+    <qresource prefix="cas_taxonomy_viewer">
+        <file>js_libs/qwebchannel.tools.js</file>
+    </qresource>
+</RCC>

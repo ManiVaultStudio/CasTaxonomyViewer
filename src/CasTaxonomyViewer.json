@@ -1,0 +1,5 @@
+{
+    "name" : "CAS Taxonomy Viewer",
+    "version" : "1.0",
+    "dependencies" : [""]
+}
