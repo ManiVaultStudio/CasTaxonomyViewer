@@ -63,7 +63,6 @@ void TaxonomyWidget::setData(const Taxonomy& taxonomy)
         QJsonObject item_data;
 
         item_data.insert("children", QJsonArray());
-        item_data.insert("value", QJsonValue(100));
         item_data.insert("name", annotation.cell_label);
 
         if (annotation.cell_set_accession.isEmpty())
@@ -118,6 +117,7 @@ void TaxonomyWidget::setData(const Taxonomy& taxonomy)
             if (currentRank == maxRank)
             {
                 node.remove("children");
+                node.insert("value", QJsonValue(100));
             }
 
             QJsonArray arr = parent["children"].toArray();
