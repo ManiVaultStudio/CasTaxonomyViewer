@@ -7,10 +7,6 @@ option(MV_UNITY_BUILD "Combine target source files into batches for faster compi
 # -----------------------------------------------------------------------------
 PROJECT("CasTaxonomyViewer")
 
-set(ManiVault_INSTALL_DIR "D:/Work/ManiVault/Install")
-set(ManiVault_INCLUDE_DIR "${ManiVault_INSTALL_DIR}/$<CONFIGURATION>/include")
-set(ManiVault_LIB "${ManiVault_INSTALL_DIR}/$<CONFIGURATION>/lib/MV_Public.lib")
-
 # -----------------------------------------------------------------------------
 # CMake Options
 # -----------------------------------------------------------------------------
@@ -86,7 +82,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::WebEngineWidgets)
 
 # Link to ManiVault and data plugins
-target_link_libraries(${PROJECT_NAME} PRIVATE ${ManiVault_LIB})
+target_link_libraries(${PROJECT_NAME} PRIVATE ManiVault::Core)
 
 set(MV_LINK_PATH "${ManiVault_INSTALL_DIR}/$<CONFIGURATION>/lib")
 set(PLUGIN_LINK_PATH "${ManiVault_INSTALL_DIR}/$<CONFIGURATION>/$<IF:$<CXX_COMPILER_ID:MSVC>,lib,Plugins>")
