@@ -148,8 +148,21 @@ void TaxonomyWidget::setData(const Taxonomy& taxonomy)
     _commObject.setData(strJson);
 }
 
+void JSCommunicationObject::js_partitionHovered(const QString& data) {
+    if (!data.isEmpty())
+    {
+        qDebug() << "PARTITION SIGNAL" << data;
+        emit partitionHovered(data);
+    }
+}
+
 void TaxonomyWidget::onWebPageFullyLoaded()
 {
     qDebug() << "FilterView::onWebPageFullyLoaded: Web page completely loaded.";
     //emit webPageLoaded();
+}
+
+void TaxonomyWidget::onPartitionHovered(QString name)
+{
+    qDebug() << "You hovered over partition: " << name;
 }

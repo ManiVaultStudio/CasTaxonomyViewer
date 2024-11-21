@@ -38,6 +38,8 @@ set(PLUGIN_SOURCES
     src/CasTaxonomyViewer.json
     src/TaxonomyWidget.h
     src/TaxonomyWidget.cpp
+    src/TaxonomyDataWidget.h
+    src/TaxonomyDataWidget.cpp
 )
 
 set(PLUGIN_MOC_HEADERS

@@ -19,6 +19,7 @@ using namespace mv::gui;
 using namespace mv::util;
 
 class TaxonomyWidget;
+class TaxonomyDataWidget;
 class QLabel;
 
 class CasTaxonomyViewer : public ViewPlugin
@@ -45,8 +46,11 @@ public:
      */
     void onDataEvent(mv::DatasetEvent* dataEvent);
 
+    void onPartitionHovered(QString name);
+
 protected:
     TaxonomyWidget*         _taxonomyWidget;
+    TaxonomyDataWidget*     _annotationPropertyWidget;
 
     DropWidget*             _dropWidget;                /** Widget for drag and drop behavior */
     mv::Dataset<CasTaxonomy>     _dataset;                    /** Points smart pointer */

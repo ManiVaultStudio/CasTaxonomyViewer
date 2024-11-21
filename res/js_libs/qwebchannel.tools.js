@@ -32,6 +32,14 @@ function notifyBridgeAvailable() {
     }
 }
 
+function partitionHovered(name)
+{
+    log("partitionHovered");
+    if (isQtAvailable) {
+        QtBridge.js_partitionHovered(name);
+    }
+}
+
 // The QtBridge is connected to our WebCommunicationObject (ChartCommObject)
 // and we can call all slots defined therein
 

@@ -17,6 +17,14 @@ signals:
     void setFilterInJS(const QVariantList& data);
     void setHeaderOptions(const QVariantList& data);
 
+public slots:
+    // Invoked from JS side 
+    void js_partitionHovered(const QString& data);
+
+signals:
+    // Signals from comm object to web widget
+    void partitionHovered(QString name);
+
 private:
 
 };
@@ -28,10 +36,13 @@ public:
     TaxonomyWidget();
     ~TaxonomyWidget();
 
+    JSCommunicationObject& getCommObject() { return _commObject; }
+
     void setData(const Taxonomy& taxonomy);
 
 private slots:
     void onWebPageFullyLoaded();
+    void onPartitionHovered(QString name);
 
 private:
     JSCommunicationObject   _commObject;    // Communication Object between Qt (cpp) and JavaScript

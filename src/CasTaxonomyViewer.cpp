@@ -1,6 +1,7 @@
 #include "CasTaxonomyViewer.h"
 
 #include "TaxonomyWidget.h"
+#include "TaxonomyDataWidget.h"
 
 #include <event/Event.h>
 
@@ -16,6 +17,7 @@ using namespace mv;
 CasTaxonomyViewer::CasTaxonomyViewer(const PluginFactory* factory) :
     ViewPlugin(factory),
     _taxonomyWidget(new TaxonomyWidget()),
+    _annotationPropertyWidget(new TaxonomyDataWidget()),
     _dropWidget(nullptr),
     _dataset(),
     _currentDatasetName(),
@@ -38,7 +40,12 @@ void CasTaxonomyViewer::init()
 
     layout->setContentsMargins(0, 0, 0, 0);
 
+    connect(&_taxonomyWidget->getCommObject(), &JSCommunicationObject::partitionHovered, this, &CasTaxonomyViewer::onPartitionHovered);
+
     layout->addWidget(_taxonomyWidget);
+
+    layout->addWidget(_annotationPropertyWidget);
+
     //layout->addWidget(_currentDatasetNameLabel);
 
     // Apply the layout
@@ -187,6 +194,24 @@ void CasTaxonomyViewer::onDataEvent(mv::DatasetEvent* dataEvent)
 
         default:
             break;
+    }
+}
+
+void CasTaxonomyViewer::onPartitionHovered(QString name)
+{
+    qDebug() << "CAS You hovered over partition: " << name;
+
+    Taxonomy& taxonomy = _dataset->getTaxonomy();
+
+    qDebug() << taxonomy.author_name;
+
+    for (Annotation& annotation : taxonomy.annotations)
+    {
+        if (annotation.cell_label == name)
+        {
+            qDebug() << annotation.cell_label << annotation.author_annotation_fields;
+            _annotationPropertyWidget->setAnnotation(annotation);
+        }
     }
 }
 
