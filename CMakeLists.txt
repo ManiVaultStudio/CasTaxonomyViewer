@@ -40,6 +40,8 @@ set(PLUGIN_SOURCES
     src/TaxonomyWidget.cpp
     src/TaxonomyDataWidget.h
     src/TaxonomyDataWidget.cpp
+    src/ElidedLabel.h
+    src/ElidedLabel.cpp
 )
 
 set(PLUGIN_MOC_HEADERS

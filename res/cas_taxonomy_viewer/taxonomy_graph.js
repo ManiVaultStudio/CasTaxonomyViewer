@@ -412,7 +412,7 @@ function drawTaxonomy(data)
   // Create the SVG container.
   const svg = d3.create("svg")
       .attr("viewBox", [-width / 2, -height / 2, width, width])
-      .style("font", "10px sans-serif");
+      .style("font", "16px sans-serif");
 
   // Append the arcs.
   const path = svg.append("g")

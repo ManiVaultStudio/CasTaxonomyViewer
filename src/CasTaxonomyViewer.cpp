@@ -43,7 +43,6 @@ void CasTaxonomyViewer::init()
     connect(&_taxonomyWidget->getCommObject(), &JSCommunicationObject::partitionHovered, this, &CasTaxonomyViewer::onPartitionHovered);
 
     layout->addWidget(_taxonomyWidget);
-
     layout->addWidget(_annotationPropertyWidget);
 
     //layout->addWidget(_currentDatasetNameLabel);

@@ -39,6 +39,8 @@ TaxonomyWidget::TaxonomyWidget() :
     init(&_commObject);
 
     layout()->setContentsMargins(0, 0, 0, 0);
+
+    setMaximumSize(600, 600);
 }
 
 TaxonomyWidget::~TaxonomyWidget()
@@ -165,4 +167,26 @@ void TaxonomyWidget::onWebPageFullyLoaded()
 void TaxonomyWidget::onPartitionHovered(QString name)
 {
     qDebug() << "You hovered over partition: " << name;
+}
+
+void TaxonomyWidget::resizeEvent(QResizeEvent* event)
+{
+    (void)event;
+    applyAspectRatio();
+}
+
+void TaxonomyWidget::applyAspectRatio()
+{
+    int w = this->width();
+    int h = this->height();
+    double aspect = static_cast<double>(h) / static_cast<double>(w);
+
+    if (aspect < 1.0f)
+    {
+        int targetSize = std::max(w, h);
+        setMinimumWidth(targetSize);
+        setMinimumHeight(targetSize);
+        setMaximumWidth(targetSize);
+        setMaximumHeight(targetSize);
+    }
 }

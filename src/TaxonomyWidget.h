@@ -44,6 +44,12 @@ private slots:
     void onWebPageFullyLoaded();
     void onPartitionHovered(QString name);
 
+protected:
+    void resizeEvent(QResizeEvent* event);
+
+public slots:
+    void applyAspectRatio();
+
 private:
     JSCommunicationObject   _commObject;    // Communication Object between Qt (cpp) and JavaScript
 };
