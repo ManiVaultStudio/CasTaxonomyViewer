@@ -3,6 +3,9 @@
 #include "TaxonomyWidget.h"
 #include "TaxonomyDataWidget.h"
 
+#include <ClusterData/ClusterData.h>
+#include <ClusterData/Cluster.h>
+
 #include <event/Event.h>
 
 #include <DatasetsMimeData.h>
@@ -210,6 +213,30 @@ void CasTaxonomyViewer::onPartitionHovered(QString name)
         {
             qDebug() << annotation.cell_label << annotation.author_annotation_fields;
             _annotationPropertyWidget->setAnnotation(annotation);
+        }
+    }
+
+    mv::Datasets datasets;
+    datasets = mv::data().getAllDatasets({ClusterType});
+
+    for (auto& dataset : datasets)
+    {
+        mv::Dataset<Clusters> clusterData = mv::data().getDataset<Clusters>(dataset->getId());
+        //Dataset<Clusters> clusterData = static_cast<Dataset<Clusters>>(dataset);
+        Cluster& cluster = clusterData->getClusters()[0];
+
+        for (Cluster& cluster : clusterData->getClusters())
+        {
+            if (cluster.getName() == name)
+            {
+                auto& indices = cluster.getIndices();
+                auto parent = clusterData.getDataset()->getParent();
+                if (parent.isValid())
+                {
+                    parent->setSelectionIndices(indices);
+                    events().notifyDatasetDataSelectionChanged(parent);
+                }
+            }
         }
     }
 }

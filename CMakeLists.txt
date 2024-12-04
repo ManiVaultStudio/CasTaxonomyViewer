@@ -26,7 +26,7 @@ endif(MSVC)
 # -----------------------------------------------------------------------------
 find_package(Qt6 COMPONENTS Widgets WebEngineWidgets REQUIRED)
 
-find_package(ManiVault COMPONENTS Core CONFIG)
+find_package(ManiVault COMPONENTS Core ClusterData CONFIG REQUIRED)
 
 # -----------------------------------------------------------------------------
 # Source files
@@ -87,6 +87,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::WebEngineWidgets)
 
 # Link to ManiVault and data plugins
 target_link_libraries(${PROJECT_NAME} PRIVATE ManiVault::Core)
+target_link_libraries(${PROJECT_NAME} PRIVATE ManiVault::ClusterData)
 
 set(MV_LINK_PATH "${ManiVault_INSTALL_DIR}/$<CONFIGURATION>/lib")
 set(PLUGIN_LINK_PATH "${ManiVault_INSTALL_DIR}/$<CONFIGURATION>/$<IF:$<CXX_COMPILER_ID:MSVC>,lib,Plugins>")
