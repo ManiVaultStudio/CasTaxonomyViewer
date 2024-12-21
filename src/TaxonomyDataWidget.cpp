@@ -16,6 +16,12 @@ TaxonomyDataWidget::TaxonomyDataWidget()
     _rationaleLabel = new QLabel("Rationale:", this);
     _rationale = new QLabel("", this);
 
+    _cellOntologyTermIdLabel = new QLabel("Cell Ontology ID:", this);
+    _cellOntologyTermId = new QLabel("", this);
+
+    _markerGenesLabel = new QLabel("Marker Gene Evidence:", this);
+    _markerGenes = new QLabel("", this);
+
     _annotationGroupBox = new QGroupBox();
 
     QGridLayout* gridLayout = new QGridLayout();
@@ -26,8 +32,15 @@ TaxonomyDataWidget::TaxonomyDataWidget()
     gridLayout->addWidget(_rationaleLabel, 1, 0);
     gridLayout->addWidget(_rationale, 1, 1);
 
-    gridLayout->addWidget(_annotationGroupBox, 2, 0, 2, 1);
+    gridLayout->addWidget(_cellOntologyTermIdLabel, 2, 0);
+    gridLayout->addWidget(_cellOntologyTermId, 2, 1);
+
+    gridLayout->addWidget(_markerGenesLabel, 3, 0);
+    gridLayout->addWidget(_markerGenes, 3, 1);
+
+    gridLayout->addWidget(_annotationGroupBox, 4, 0, 1, 2);
     gridLayout->setRowStretch(gridLayout->rowCount(), 1);
+
     setLayout(gridLayout);
 
     setMaximumWidth(600);
@@ -37,6 +50,14 @@ void TaxonomyDataWidget::setAnnotation(Annotation& annotation)
 {
     _title->setText(annotation.cell_label);
     _rationale->setText(annotation.rationale);
+    QString url = "<a href=\"whatever\">" + annotation.cell_ontology_term_id + "</a>";
+    _cellOntologyTermId->setText(url);
+    _cellOntologyTermId->setTextFormat(Qt::RichText);
+    _cellOntologyTermId->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    _cellOntologyTermId->setOpenExternalLinks(true);
+
+    QString markerGenes = annotation.marker_gene_evidence.join(", ");
+    _markerGenes->setText(markerGenes);
 
     if (_annotationGroupBox->layout() == nullptr)
     {

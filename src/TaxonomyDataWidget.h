@@ -22,5 +22,11 @@ private:
     QLabel*     _rationaleLabel;
     QLabel*     _rationale;
 
+    QLabel*     _cellOntologyTermIdLabel;
+    QLabel*     _cellOntologyTermId;
+
+    QLabel*     _markerGenesLabel;
+    QLabel*     _markerGenes;
+
     QVector<QLabel*> _authorAnnotationFields;
 };
