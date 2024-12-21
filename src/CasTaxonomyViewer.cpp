@@ -223,7 +223,6 @@ void CasTaxonomyViewer::onPartitionHovered(QString name)
     {
         mv::Dataset<Clusters> clusterData = mv::data().getDataset<Clusters>(dataset->getId());
         //Dataset<Clusters> clusterData = static_cast<Dataset<Clusters>>(dataset);
-        Cluster& cluster = clusterData->getClusters()[0];
 
         for (Cluster& cluster : clusterData->getClusters())
         {
