@@ -427,8 +427,8 @@ function drawTaxonomy(data)
 
   // Make them clickable if they have children.
   path.style("cursor", "pointer")
-      .on("mouseover", hovered)
-      .on("click", clicked);
+      .on("click", hovered)
+      .on("dblclick", clicked);
 
   const format = d3.format(",d");
   path.append("title")
@@ -451,14 +451,14 @@ function drawTaxonomy(data)
       .attr("r", radius)
       .attr("fill", "none")
       .attr("pointer-events", "all")
-      .on("click", clicked);
+      .on("dblclick", clicked);
 
   function hovered(event, d) {
     log(`Hovered slice: Name - ${d.data.name}, Value - ${d.value}`);
     partitionHovered(d.data.name);
   }
 
-  // Handle zoom on click.
+  // Handle zoom on dblclick.
   function clicked(event, p) {
     parent.datum(p.parent || root);
 
