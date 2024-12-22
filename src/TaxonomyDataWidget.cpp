@@ -50,7 +50,7 @@ void TaxonomyDataWidget::setAnnotation(Annotation& annotation)
 {
     _title->setText(annotation.cell_label);
     _rationale->setText(annotation.rationale);
-    QString url = "<a href=\"whatever\">" + annotation.cell_ontology_term_id + "</a>";
+    QString url = "<a href=\"http://purl.obolibrary.org/obo/" + annotation.cell_ontology_term_id.replace(":", "_") + "\">" + annotation.cell_ontology_term_id + "</a>";
     _cellOntologyTermId->setText(url);
     _cellOntologyTermId->setTextFormat(Qt::RichText);
     _cellOntologyTermId->setTextInteractionFlags(Qt::TextBrowserInteraction);
