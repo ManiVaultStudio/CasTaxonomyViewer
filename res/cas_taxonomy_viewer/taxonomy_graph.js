@@ -389,7 +389,7 @@ function drawTaxonomy(data)
   const radius = width / 6;
 
   // Create the color scale.
-  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
+  //const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
 
   // Compute the layout.
   const hierarchy = d3.hierarchy(data)
@@ -419,12 +419,12 @@ function drawTaxonomy(data)
     .selectAll("path")
     .data(root.descendants().slice(1))
     .join("path")
-      .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
+      .attr("fill", d => d.data.color || (d.parent ? d.parent.data.color : "#ccc"))
       .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
       .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
 
       .attr("d", d => arc(d.current));
-
+//.attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
   // Make them clickable if they have children.
   path.style("cursor", "pointer")
       .on("click", hovered)

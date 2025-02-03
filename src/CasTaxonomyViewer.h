@@ -46,6 +46,8 @@ public:
      */
     void onDataEvent(mv::DatasetEvent* dataEvent);
 
+    void setColors(Taxonomy& taxonomy);
+
     void onPartitionHovered(QString name);
 
 protected:

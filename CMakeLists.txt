@@ -42,6 +42,7 @@ set(PLUGIN_SOURCES
     src/TaxonomyDataWidget.cpp
     src/ElidedLabel.h
     src/ElidedLabel.cpp
+    src/CellSetColors.h
 )
 
 set(PLUGIN_MOC_HEADERS

@@ -13,6 +13,8 @@
 #include <QDebug>
 #include <QMimeData>
 
+#include "CellSetColors.h"
+
 Q_PLUGIN_METADATA(IID "studio.manivault.CasTaxonomyViewer")
 
 using namespace mv;
@@ -102,6 +104,7 @@ void CasTaxonomyViewer::init()
                     // Dataset can be dropped
                     dropRegions << new DropWidget::DropRegion(this, "Points", description, "map-marker-alt", true, [this, candidateDataset]() {
                         _dataset = candidateDataset;
+                        setColors(_dataset->getTaxonomy());
                         _taxonomyWidget->setData(_dataset->getTaxonomy());
                         _dropWidget->setShowDropIndicator(!_dataset.isValid());
                     });
@@ -130,6 +133,34 @@ void CasTaxonomyViewer::init()
     _eventListener.addSupportedEventType(static_cast<std::uint32_t>(EventType::DatasetRemoved));
     _eventListener.addSupportedEventType(static_cast<std::uint32_t>(EventType::DatasetDataSelectionChanged));
     _eventListener.registerDataEventByType(CasTaxonomyType, std::bind(&CasTaxonomyViewer::onDataEvent, this, std::placeholders::_1));
+}
+
+void CasTaxonomyViewer::setColors(Taxonomy& taxonomy)
+{
+    /// TEMP Take colors from taxonomy and set them on cluster datasets as well
+    qDebug() << taxonomy.author_name;
+
+    mv::Datasets datasets;
+    datasets = mv::data().getAllDatasets({ ClusterType });
+
+    for (Annotation& annotation : taxonomy.annotations)
+    {
+        for (auto& dataset : datasets)
+        {
+            mv::Dataset<Clusters> clusterData = mv::data().getDataset<Clusters>(dataset->getId());
+            //Dataset<Clusters> clusterData = static_cast<Dataset<Clusters>>(dataset);
+
+            for (Cluster& cluster : clusterData->getClusters())
+            {
+                if (cluster.getName() == annotation.cell_label)
+                {
+                    cluster.setColor(QColor(HARD_CODED_COLORS[annotation.cell_set_accession]));
+                    events().notifyDatasetDataChanged(clusterData);
+                }
+            }
+        }
+    }
+    ///
 }
 
 void CasTaxonomyViewer::onDataEvent(mv::DatasetEvent* dataEvent)
@@ -207,12 +238,14 @@ void CasTaxonomyViewer::onPartitionHovered(QString name)
 
     qDebug() << taxonomy.author_name;
 
+    Annotation associatedAnnotation;
     for (Annotation& annotation : taxonomy.annotations)
     {
         if (annotation.cell_label == name)
         {
             qDebug() << annotation.cell_label << annotation.author_annotation_fields;
             _annotationPropertyWidget->setAnnotation(annotation);
+            associatedAnnotation = annotation;
         }
     }
 

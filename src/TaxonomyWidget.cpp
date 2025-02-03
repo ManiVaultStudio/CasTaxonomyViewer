@@ -1,5 +1,7 @@
 #include "TaxonomyWidget.h"
 
+#include "CellSetColors.h"
+
 #include <QLayout>
 
 #include <QJsonDocument>
@@ -64,6 +66,11 @@ void TaxonomyWidget::setData(const Taxonomy& taxonomy)
 
         QJsonObject item_data;
 
+        if (HARD_CODED_COLORS.contains(annotation.cell_set_accession))
+        {
+            item_data.insert("color", HARD_CODED_COLORS[annotation.cell_set_accession]);
+        }
+
         item_data.insert("children", QJsonArray());
         item_data.insert("name", annotation.cell_label);
 
@@ -81,7 +88,7 @@ void TaxonomyWidget::setData(const Taxonomy& taxonomy)
     for (int i = 0; i < taxonomy.annotations.size(); i++)
     {
         const Annotation& annotation = taxonomy.annotations[i];
-
+        
         int rank = 0;
         QString parent_id = annotation.parent_cell_set_accession;
         while (!parent_id.isEmpty())
