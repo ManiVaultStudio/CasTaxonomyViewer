@@ -12,6 +12,7 @@
 
 #include <QDebug>
 #include <QMimeData>
+#include <QScrollArea>
 
 #include "CellSetColors.h"
 
@@ -47,10 +48,18 @@ void CasTaxonomyViewer::init()
 
     connect(&_taxonomyWidget->getCommObject(), &JSCommunicationObject::partitionHovered, this, &CasTaxonomyViewer::onPartitionHovered);
 
-    layout->addWidget(_taxonomyWidget);
-    layout->addWidget(_annotationPropertyWidget);
+    QScrollArea* scrollArea = new QScrollArea(&this->getWidget());
+    scrollArea->setWidgetResizable(true);
 
-    //layout->addWidget(_currentDatasetNameLabel);
+    QWidget* containerWidget = new QWidget();
+    QVBoxLayout* containerLayout = new QVBoxLayout(containerWidget);
+
+    containerLayout->addWidget(_taxonomyWidget);
+    containerLayout->addWidget(_annotationPropertyWidget);
+
+    scrollArea->setWidget(containerWidget);
+
+    layout->addWidget(scrollArea);
 
     // Apply the layout
     getWidget().setLayout(layout);
